@@ -1,0 +1,26 @@
+{
+    "name": "aria-ng-gui-plugins-core",
+    "version": "1.0.0",
+    "main": "dist/main.js",
+    "module": "src/main.ts",
+    "dependencies": {
+        "@xmader/async-event-emitter": "^1.0.1"
+    },
+    "devDependencies": {
+        "typescript": "^3.6.2"
+    },
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc --watch"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Xmader/aria-ng-gui-plugins-core.git"
+    },
+    "author": "Xmader",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Xmader/aria-ng-gui-plugins-core/issues"
+    },
+    "homepage": "https://github.com/Xmader/aria-ng-gui-plugins-core#readme"
+}

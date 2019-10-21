@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "es2019",
+      "dom"
+    ],
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "removeComments": false,
+    "strict": false,
+    "esModuleInterop": true,
+    "newLine": "LF",
+    "sourceMap": true,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "downlevelIteration": true
+  }
+}
