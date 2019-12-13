@@ -13,7 +13,6 @@
     "strict": false,
     "esModuleInterop": true,
     "newLine": "LF",
-    "sourceMap": true,
     "pretty": true,
     "resolveJsonModule": true,
     "downlevelIteration": true

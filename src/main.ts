@@ -1,51 +1,12 @@
 
 import AsyncEventEmitter from "@xmader/async-event-emitter"
 
-interface Task {
-    gid: number,
+import { Task } from "./aria2"
+import FS from "./fs"
 
-    status: "waiting" | "paused" | "complete" | "error" | "removed",
-
-    totalLength: number,
-
-    completedLength: number,
-    completePercent?: number, /** if totalLength > 0  */
-
-    remainLength: number,
-    remainPercent: number,
-
-    /** if P2P downloading */
-    uploadLength?: number,
-    shareRatio?: number,
-    uploadSpeed?: number,
-
-    downloadSpeed: number,
-
-    connections,
-
-    numPieces: number,
-    completedPieces,
-    pieceLength: number,
-
-    /** downloadSpeed == 0 */
-    idle: boolean,
-
-    remainTime: number,
-
-    numSeeders?: number,
-    seeder: boolean,
-
-    verifiedLength?: number,
-    verifiedPercent?: number,
-
-    hasTaskName: boolean,
-    /** if hasTaskName == true */
-    taskName?: string,
-
-    errorCode?: number,
-    errorDescription?: string,
-
-    files,
+export interface Plugin {
+    activate: (context: PluginsCore) => void | Promise<void>,
+    deactivate?: (context: PluginsCore) => void | Promise<void>,
 }
 
 export type AriaNgGUIEvents = {
@@ -82,14 +43,28 @@ export type AriaNgGUIEvents = {
     "aria2-config-changed": (changedOptions: { [key: string]: string }) => void,
 }
 
-export class AriaNgGUIPluginsCore extends AsyncEventEmitter<AriaNgGUIEvents> {
+export class PluginsCore extends AsyncEventEmitter<AriaNgGUIEvents> {
 
-    
+    readonly fs = FS
+
+    constructor() {
+        super()
+    }
+
+    registerPlugin(plugin: Plugin) {
+
+        window.addEventListener("beforeunload", () => {
+            if (plugin.deactivate && typeof plugin.deactivate == "function") {
+                plugin.deactivate(this)
+            }
+        })
+
+        plugin.activate(this)
+
+    }
 
 }
 
-export const AriaNgGUIEventTarget = new AriaNgGUIPluginsCore()
+export const PluginsHelper = new PluginsCore()
 
-window["AriaNgGUI"] = AriaNgGUIEventTarget
-
-export default AriaNgGUIEventTarget
+export default PluginsHelper
