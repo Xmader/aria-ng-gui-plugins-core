@@ -4,6 +4,9 @@ import AsyncEventEmitter from "@xmader/async-event-emitter"
 import { Task } from "./aria2"
 import FS from "./fs"
 
+import os from "os-browserify"
+import path from "path-browserify"
+
 export interface Plugin {
     activate: (context: PluginsCore) => void | Promise<void>,
     deactivate?: (context: PluginsCore) => void | Promise<void>,
@@ -46,6 +49,10 @@ export type AriaNgGUIEvents = {
 export class PluginsCore extends AsyncEventEmitter<AriaNgGUIEvents> {
 
     readonly fs = FS
+
+    readonly path: typeof import("path").posix = path
+
+    readonly os: typeof import("os") = os
 
     constructor() {
         super()
