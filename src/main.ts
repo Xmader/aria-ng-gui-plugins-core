@@ -30,6 +30,7 @@ export type AriaNgGUIEvents = {
      * should return {boolean} 文件或目录存在
      */
     "request-if-file-exists": (path: string) => boolean | Promise<boolean>,
+    "request-if-file-exists-sync": (path: string) => boolean,
 
     /**
      * 更新下载进度事件
