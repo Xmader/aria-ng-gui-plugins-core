@@ -34,6 +34,9 @@ export type AriaNgGUIEvents = {
 
     "ariang-config-changed": (changedOptions: OptionsObj) => void,
     "aria2-config-changed": (changedOptions: OptionsObj) => void,
+
+    /** AriaNg MainController loaded */
+    "ready": () => void,
 }
 
 export interface ExtraMethods {
