@@ -12,6 +12,8 @@ export interface Plugin {
     deactivate?: (context: PluginsCore) => void | Promise<void>,
 }
 
+type OptionsObj = { [key: string]: string }
+
 export type AriaNgGUIEvents = {
     /** 请求触发桌面提醒事件 */
     "notify": (title: string, message: string) => void,
@@ -30,8 +32,8 @@ export type AriaNgGUIEvents = {
      */
     "downloading": (tasks: Task[]) => void,
 
-    "ariang-config-changed": (changedOptions: { [key: string]: string }) => void,
-    "aria2-config-changed": (changedOptions: { [key: string]: string }) => void,
+    "ariang-config-changed": (changedOptions: OptionsObj) => void,
+    "aria2-config-changed": (changedOptions: OptionsObj) => void,
 }
 
 export interface ExtraMethods {
@@ -47,6 +49,12 @@ export interface ExtraMethods {
 
     /** 在文件管理器中打开指定文件夹 */
     openDir?: (dir: string) => void;
+
+    /** 更改 aria2 设置 */
+    changeAria2Config?: (changedOptions: OptionsObj) => void;
+
+    /** 更改 AriaNg 设置 */
+    changeAriaNgConfig?: (changedOptions: OptionsObj) => void;
 
     [x: string]: Function;
 }
