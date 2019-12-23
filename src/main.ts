@@ -19,19 +19,6 @@ export type AriaNgGUIEvents = {
     /** 单击右键事件 */
     "contextmenu": (event: MouseEvent) => void,
 
-    /** 请求在文件管理器中打开指定文件夹事件 */
-    "request-open-download-dir": (dir: string) => void,
-
-    /** 请求在文件管理器中显示文件事件 */
-    "request-show-file": (path: string) => void,
-
-    /**
-     * 请求检测文件或目录是否存在事件  
-     * should return {boolean} 文件或目录存在
-     */
-    "request-if-file-exists": (path: string) => boolean | Promise<boolean>,
-    "request-if-file-exists-sync": (path: string) => boolean,
-
     /**
      * 更新下载进度事件
      * @param percent 如果没有正在下载中的认为，则为 -1
@@ -47,6 +34,23 @@ export type AriaNgGUIEvents = {
     "aria2-config-changed": (changedOptions: { [key: string]: string }) => void,
 }
 
+export interface ExtraMethods {
+    /**
+     * 文件或目录是否存在  
+     * @returns {boolean} 文件或目录存在
+     */
+    fileExists?: (path: string) => boolean | Promise<boolean>;
+    fileExistsSync?: (path: string) => boolean;
+
+    /** 在文件管理器中显示文件 */
+    showFile?: (path: string) => void;
+
+    /** 在文件管理器中打开指定文件夹 */
+    openDir?: (dir: string) => void;
+
+    [x: string]: Function;
+}
+
 export class PluginsCore extends AsyncEventEmitter<AriaNgGUIEvents> {
 
     readonly fs = FS
@@ -54,6 +58,8 @@ export class PluginsCore extends AsyncEventEmitter<AriaNgGUIEvents> {
     readonly path: typeof import("path").posix = path
 
     readonly os: typeof import("os") = os
+
+    readonly extra: ExtraMethods = {}
 
     constructor() {
         super()
